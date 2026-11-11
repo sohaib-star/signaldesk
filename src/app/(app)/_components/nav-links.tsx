@@ -9,7 +9,9 @@ type Variant = "rail" | "strip";
 
 const listStyles: Record<Variant, string> = {
   rail: "flex flex-col",
-  strip: "flex overflow-x-auto px-2 [scrollbar-width:none]",
+  // Below sm the five labels share the width evenly so all fit at 320px.
+  // overflow-x-auto remains as a fallback for enlarged text.
+  strip: "flex justify-between overflow-x-auto px-1 sm:justify-start sm:px-2",
 };
 
 const linkStyles: Record<Variant, { base: string; active: string }> = {
@@ -19,9 +21,9 @@ const linkStyles: Record<Variant, { base: string; active: string }> = {
       "bg-ink-raised text-paper before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:bg-paper",
   },
   strip: {
-    base: "relative flex items-baseline gap-1.5 px-3 py-2.5 text-sm whitespace-nowrap text-graphite-300 transition-colors hover:text-paper",
+    base: "relative flex items-baseline gap-1.5 px-2 py-2.5 text-[0.8125rem] whitespace-nowrap text-graphite-300 transition-colors hover:text-paper sm:px-3 sm:text-sm",
     active:
-      "text-paper after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-paper",
+      "text-paper after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:bg-paper sm:after:inset-x-3",
   },
 };
 

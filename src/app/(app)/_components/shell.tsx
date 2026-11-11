@@ -3,10 +3,22 @@ import { Suspense } from "react";
 import { Wordmark } from "@/components/brand/wordmark";
 import { ActiveNavLinks, NavLinks } from "./nav-links";
 
-/** Desktop navigation rail (lg and up). */
+/**
+ * Desktop navigation rail (lg and up). The outer column carries the ink
+ * background for the full height of the grid; the inner panel stays pinned
+ * to the viewport while the page scrolls.
+ */
 export function Rail() {
   return (
-    <div className="sticky top-0 hidden h-dvh flex-col border-r border-ink-rule bg-ink text-paper lg:flex">
+    <div className="hidden border-r border-ink-rule bg-ink text-paper lg:block">
+      <RailPanel />
+    </div>
+  );
+}
+
+function RailPanel() {
+  return (
+    <div className="sticky top-0 flex h-dvh flex-col overflow-y-auto">
       <Link
         href="/today"
         className="block px-5 pt-6 pb-9"

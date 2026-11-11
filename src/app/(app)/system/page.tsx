@@ -3,56 +3,12 @@ import type { ReactNode } from "react";
 import { MarginNote, PageBody } from "@/components/ui/page-body";
 import { PageHeader } from "@/components/ui/page-header";
 import { ProvenanceLegend } from "@/components/ui/provenance";
+import { GRAPHITE, SIGNAL, SURFACES, type Swatch } from "./swatches";
 
 export const metadata: Metadata = {
   title: "Design system",
   robots: { index: false },
 };
-
-type Swatch = { token: string; hex: string; use: string; dark?: boolean };
-
-const SURFACES: Swatch[] = [
-  { token: "paper", hex: "#F4F1EA", use: "Primary working surface" },
-  { token: "paper-raised", hex: "#FAF8F3", use: "Inputs, popovers" },
-  { token: "paper-sunken", hex: "#ECE8DF", use: "Wells, code, table stripes" },
-  { token: "ink", hex: "#16181C", use: "Text, chrome, rail", dark: true },
-  {
-    token: "ink-raised",
-    hex: "#202328",
-    use: "Hover/active on ink",
-    dark: true,
-  },
-];
-
-const GRAPHITE: Swatch[] = [
-  { token: "graphite-200", hex: "#D5CFC3", use: "Hairline rules" },
-  { token: "graphite-300", hex: "#BDB6A8", use: "Strong rules; text on ink" },
-  { token: "graphite-400", hex: "#9A9387", use: "Secondary text on ink" },
-  { token: "graphite-500", hex: "#77716A", use: "Non-text marks only" },
-  {
-    token: "graphite-600",
-    hex: "#5C5852",
-    use: "Secondary text on paper",
-    dark: true,
-  },
-  {
-    token: "graphite-700",
-    hex: "#45423D",
-    use: "Body text, muted",
-    dark: true,
-  },
-];
-
-const SIGNAL: Swatch[] = [
-  {
-    token: "signal",
-    hex: "#E8590C",
-    use: "Attention marks, focus ring",
-    dark: true,
-  },
-  { token: "signal-strong", hex: "#B2430A", use: "Attention text", dark: true },
-  { token: "signal-wash", hex: "#F7E3D4", use: "Attention row background" },
-];
 
 export default function SystemPage() {
   return (
@@ -134,13 +90,15 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function SwatchRow({ swatches }: { swatches: Swatch[] }) {
+function SwatchRow({ swatches }: { swatches: readonly Swatch[] }) {
+  // Borders live on the cells (not a gap-colour trick) so incomplete rows
+  // leave plain paper rather than grey filler blocks.
   return (
-    <ul className="grid grid-cols-2 gap-px border border-graphite-200 bg-graphite-200 sm:grid-cols-3 xl:grid-cols-6">
+    <ul className="grid grid-cols-2 pt-px pl-px sm:grid-cols-3 xl:grid-cols-4">
       {swatches.map((s) => (
-        <li key={s.token} className="bg-paper">
+        <li key={s.token} className="-mt-px -ml-px border border-graphite-200">
           <div
-            className="h-16 border-b border-graphite-200"
+            className="h-14 border-b border-graphite-200"
             style={{ backgroundColor: `var(--color-${s.token})` }}
           />
           <div className="p-2.5">
