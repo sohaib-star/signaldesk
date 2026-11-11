@@ -2,15 +2,18 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Instrument_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 
+// Italic is load-bearing: estimates are set in italics (see provenance.tsx),
+// so load the true italic rather than letting the browser synthesise one.
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
   subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
+// Display face is only ever set upright; no italic is loaded.
 const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
-  style: ["normal", "italic"],
 });
 
 const plexMono = IBM_Plex_Mono({
