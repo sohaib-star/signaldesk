@@ -52,7 +52,7 @@ npm run build && npm run test:e2e
 ```
 src/
   app/
-    (app)/               authenticated workspace (shell layout + sections)
+    (app)/               workspace shell layout and sections
       _components/       navigation and shell
       today/ pipeline/ accounts/ reports/ model/
       system/            design-system reference (not in navigation)

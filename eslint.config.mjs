@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
     // Test artefacts:
     "playwright-report/**",
     "test-results/**",
+    "qa/**",
   ]),
   // Architecture boundary: the intelligence engine is pure TypeScript. It must
   // not depend on React, Next.js, the database, or any UI/server module, so it
@@ -40,6 +41,25 @@ const eslintConfig = defineConfig([
               ],
               message:
                 "src/domain must stay framework-free: pure TypeScript only.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  // Dependency direction: shared components and utilities must not reach
+  // into route code. Routes compose components, never the reverse.
+  {
+    files: ["src/components/**/*.{ts,tsx}", "src/lib/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@/app/*"],
+              message:
+                "Shared components and lib must not import from src/app.",
             },
           ],
         },

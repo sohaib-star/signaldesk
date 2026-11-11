@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 export type BlueprintItem = {
   title: string;
   description: string;
@@ -15,11 +17,12 @@ export function ViewBlueprint({
   statement: string;
   items: readonly BlueprintItem[];
 }) {
+  const headingId = useId();
   return (
-    <section aria-labelledby="blueprint-heading">
+    <section aria-labelledby={headingId}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b-2 border-ink pb-2">
         <h2
-          id="blueprint-heading"
+          id={headingId}
           className="font-display text-2xl font-medium tracking-tight"
         >
           Not connected yet
