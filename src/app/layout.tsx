@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Instrument_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 
@@ -26,6 +26,12 @@ export const metadata: Metadata = {
   },
   description:
     "Customer and pipeline intelligence with explainable, auditable recommendations.",
+};
+
+export const viewport: Viewport = {
+  // Matches the ink header so mobile browser chrome blends with the app.
+  themeColor: "#16181c",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
