@@ -10,13 +10,15 @@
  * Usage:  node scripts/qa-visual.mjs [baseUrl] [label]
  *   baseUrl  default http://localhost:3000
  *   label    output subfolder, default "run"
+ *   QA_BROWSER=chromium|firefox|webkit  engine to use (default chromium;
+ *   others need `npx playwright install firefox webkit`)
  *
  * Output: qa/<label>/screenshots/<viewport>/<route>.png and qa/<label>/results.json
  * (qa/ is gitignored). Exits non-zero if any check fails.
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { chromium } from "@playwright/test";
+import { chromium, firefox, webkit } from "@playwright/test";
 
 const baseUrl = (process.argv[2] ?? "http://localhost:3000").replace(/\/$/, "");
 const label = process.argv[3] ?? "run";
@@ -43,12 +45,19 @@ const VIEWPORTS = [
 const results = [];
 let failures = 0;
 
-const browser = await chromium.launch();
+const engines = { chromium, firefox, webkit };
+const engineName = process.env.QA_BROWSER ?? "chromium";
+const engine = engines[engineName];
+if (!engine) throw new Error(`Unknown QA_BROWSER: ${engineName}`);
+// Firefox does not support isMobile emulation; viewport size still applies.
+const supportsMobile = engineName !== "firefox";
+
+const browser = await engine.launch();
 try {
   for (const vp of VIEWPORTS) {
     const context = await browser.newContext({
       viewport: { width: vp.width, height: vp.height },
-      isMobile: vp.isMobile,
+      isMobile: supportsMobile && vp.isMobile,
       hasTouch: vp.isMobile,
       deviceScaleFactor: vp.isMobile ? 2 : 1,
     });
