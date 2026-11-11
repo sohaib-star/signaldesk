@@ -9,25 +9,23 @@ export const PROVENANCE = {
   fact: {
     label: "Fact",
     glyph: "■",
-    description: "A stored record, shown as written.",
+    description: "Stored data, shown exactly as entered.",
   },
   derived: {
     label: "Derived",
     glyph: "ƒ",
-    description:
-      "Computed by a documented formula. The formula and its inputs can always be opened.",
+    description: "Calculated from a formula you can always open and check.",
   },
   estimate: {
     label: "Estimate",
     glyph: "≈",
     description:
-      "Arithmetic on stated assumptions. Set in italics, with its method alongside.",
+      "Based on stated assumptions. Shown in italics, with the method alongside.",
   },
   generated: {
     label: "Generated",
     glyph: "¶",
-    description:
-      "Written by a language model. Cites the facts it used and never stands alone.",
+    description: "Written by AI. Always cites the facts it used.",
   },
 } as const;
 

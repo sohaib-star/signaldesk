@@ -12,10 +12,10 @@ export default function NotFound() {
         404
       </p>
       <h1 className="mt-2 font-display text-4xl font-medium tracking-tight">
-        No such page
+        Page not found
       </h1>
       <p className="mt-4 leading-relaxed text-graphite-700">
-        The address doesn&rsquo;t match any view in this workspace.
+        Check the link, or head back to Today.
       </p>
       <Link
         href="/today"

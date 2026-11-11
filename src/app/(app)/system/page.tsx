@@ -16,14 +16,14 @@ export default function SystemPage() {
       <PageHeader
         eyebrow="Reference / Design system"
         title="Design system"
-        dek="The tokens and conventions every SignalDesk view is built from. Tailwind's default palette is disabled, so these are the only colours available."
+        dek="The colours, type, and conventions every SignalDesk page is built from. Tailwind’s default palette is turned off, so these are the only colours available."
       />
       <PageBody
         margin={
           <>
             <MarginNote title="The orange rule">
-              Signal orange means one thing: this needs a decision. It is never
-              used for decoration, selection, or navigation state.
+              Orange means one thing: this needs a decision. Don&rsquo;t use it
+              for decoration, selection, or navigation.
             </MarginNote>
             <MarginNote title="Contrast">
               Text on paper uses graphite-600 or darker (≥ 6.3:1). Orange text
@@ -67,7 +67,7 @@ export default function SystemPage() {
             </TypeRow>
           </dl>
           <p className="mt-3 text-sm text-graphite-600">
-            Specimen text only. These strings illustrate type, not data.
+            Sample text to show the typefaces. Not real data.
           </p>
         </Block>
 

@@ -22,7 +22,7 @@ function RailPanel() {
       <Link
         href="/today"
         className="block px-5 pt-6 pb-9"
-        aria-label="SignalDesk — go to Today"
+        aria-label="SignalDesk home"
       >
         <Wordmark />
       </Link>
@@ -48,11 +48,11 @@ export function MobileHeader() {
   return (
     <header className="sticky top-0 z-10 bg-ink text-paper lg:hidden">
       <div className="flex h-12 items-center justify-between px-4">
-        <Link href="/today" aria-label="SignalDesk — go to Today">
+        <Link href="/today" aria-label="SignalDesk home">
           <Wordmark />
         </Link>
         <span className="font-mono text-eyebrow text-graphite-400 uppercase">
-          No data source
+          Not connected
         </span>
       </div>
       <nav aria-label="Primary" className="border-t border-ink-rule">
@@ -82,7 +82,7 @@ function DataSourceStatus() {
         Not connected
       </p>
       <p className="mt-2 text-xs leading-relaxed text-graphite-400">
-        No records exist yet. Nothing in this workspace is sample data.
+        No data has been added yet. Nothing you see here is sample data.
       </p>
     </div>
   );

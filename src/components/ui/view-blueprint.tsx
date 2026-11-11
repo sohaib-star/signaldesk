@@ -36,7 +36,7 @@ export function ViewBlueprint({
       </p>
 
       <h3 className="mt-10 font-mono text-eyebrow text-graphite-600 uppercase">
-        Planned contents
+        Coming to this page
       </h3>
       <ol className="mt-2 border-t border-graphite-300">
         {items.map((item, i) => (

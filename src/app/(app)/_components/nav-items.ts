@@ -3,7 +3,7 @@ export type NavItem = {
   label: string;
   /** Two-digit section number, shown in the rail and page eyebrow. */
   index: string;
-  /** One line: the question this section answers. */
+  /** Short label shown after the index in the page eyebrow. */
   summary: string;
 };
 
@@ -12,31 +12,31 @@ export const NAV_ITEMS = [
     href: "/today",
     label: "Today",
     index: "01",
-    summary: "What needs a decision now, and why",
+    summary: "Your priorities",
   },
   {
     href: "/pipeline",
     label: "Pipeline",
     index: "02",
-    summary: "Where revenue is moving, and where it is stuck",
+    summary: "Open deals",
   },
   {
     href: "/accounts",
     label: "Accounts",
     index: "03",
-    summary: "Every company, contact, and interaction",
+    summary: "Companies and contacts",
   },
   {
     href: "/reports",
     label: "Reports",
     index: "04",
-    summary: "Defined metrics, compared over time",
+    summary: "Performance over time",
   },
   {
     href: "/model",
     label: "Model",
     index: "05",
-    summary: "How scores and recommendations are computed",
+    summary: "How scoring works",
   },
 ] as const satisfies readonly NavItem[];
 

@@ -191,6 +191,50 @@ importing `src/app` (`42aa615`).
   `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`.
   `script-src` is deliberately unrestricted (see limitations).
 
+## Copy revision (editorial pass)
+
+Every visible string was rewritten to sound natural and speak to the user
+directly. This covers page intros, nav eyebrows, margin notes, empty states,
+the "coming to this page" lists, provenance descriptions, error screens, the
+404 page, accessible labels and the site description. Functionality, layout,
+and architecture are unchanged. No data, counts, or claims were added.
+
+Examples:
+
+| Where          | Before                                                                                                 | After                                                                      |
+| -------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Today intro    | A short, ranked list of the decisions that need you, each with the records and calculations behind it. | Here’s what needs your attention today.                                    |
+| Pipeline intro | Every open deal by stage, with stalls and slipped dates marked against explicit thresholds.            | See where your deals stand and which ones are falling behind.              |
+| Model intro    | The complete, inspectable definition of how SignalDesk scores accounts… Nothing is hidden behind it.   | See exactly how accounts are scored and why each recommendation appears.   |
+| Today eyebrow  | 01 / What needs a decision now, and why                                                                | 01 / Your priorities                                                       |
+| Margin heading | This view answers                                                                                      | Questions it answers                                                       |
+| List heading   | Planned contents                                                                                       | Coming to this page                                                        |
+| Model note     | Principle: Intelligence here is deterministic first…                                                   | How AI is used: Scores and rankings come from clear rules you can inspect… |
+| Error heading  | This view failed to load                                                                               | This page didn’t load                                                      |
+| 404 heading    | No such page                                                                                           | Page not found                                                             |
+
+Technical terms are kept only where they explain a calculation, for example
+_weighted value_. Design-reference details such as contrast ratios stay on
+`/system`, the internal design reference.
+
+Test updates were limited to string matches on copy that changed: the 404
+heading in `tests/e2e/shell.spec.ts`, and the error-reference sentence in
+`error.test.tsx`. No assertion was removed or loosened. The regression test
+that the copy never mentions a reference that isn't shown still passes.
+
+Results after the rewrite (all run on the final copy):
+
+| Check                                           | Result                          |
+| ----------------------------------------------- | ------------------------------- |
+| `npm run check` (lint, format, typecheck, unit) | ✅ exit 0, 47 / 47 tests        |
+| `npm run build`                                 | ✅ exit 0, 9 routes, all static |
+| E2E + axe (Playwright, 3 viewports)             | ✅ 66 / 66                      |
+| Live sweep, production, Chromium                | ✅ 28 / 28 clean                |
+| Live sweep, dev server, Chromium                | ✅ 28 / 28 clean                |
+
+The screenshots were reviewed manually at 1440 and 320, and line wrapping is
+fine. Firefox and WebKit were not re-swept after this copy-only change.
+
 ## Remaining limitations
 
 1. **No headed, real-device, or Claude in Chrome testing.** All browser
@@ -218,6 +262,8 @@ importing `src/app` (`42aa615`).
 | `qa/final-prod-chromium/` | final production sweep; `extra/` has forced-colors and italic evidence |
 | `qa/final-prod-firefox/`  | final production sweep, Firefox                                        |
 | `qa/final-prod-webkit/`   | final production sweep, WebKit                                         |
+| `qa/copy-prod/`           | production sweep after the copy rewrite                                |
+| `qa/copy-dev/`            | dev-server sweep after the copy rewrite                                |
 
 Each sweep folder has `screenshots/<viewport>/<route>.png` and
 `results.json` with per-check details.

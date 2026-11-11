@@ -15,44 +15,44 @@ export default function AccountsPage() {
       <PageHeader
         eyebrow={`${section.index} / ${section.summary}`}
         title={section.label}
-        dek="The companies you sell to, the people inside them, and the full record of every interaction."
+        dek="Everyone you sell to, and every conversation you’ve had with them."
       />
       <PageBody
         margin={
           <>
-            <MarginNote title="This view answers">
+            <MarginNote title="Questions it answers">
               <QuestionList
                 questions={[
                   "Who are our leads, prospects, and customers?",
-                  "When did we last speak to this account?",
-                  "Which accounts score highest, and why?",
+                  "When did we last talk to this account?",
+                  "Which accounts look strongest, and why?",
                 ]}
               />
             </MarginNote>
-            <MarginNote title="Model note">
-              A lead is a lifecycle stage on an account, not a separate kind of
-              record. Converting a lead never duplicates data.
+            <MarginNote title="Leads">
+              A lead is simply an account at an early stage. When it converts,
+              it stays the same record. Nothing is copied.
             </MarginNote>
           </>
         }
       >
         <ViewBlueprint
-          statement="No accounts have been recorded yet."
+          statement="You haven’t added any accounts yet."
           items={[
             {
-              title: "Directory and segments",
+              title: "Search and filters",
               description:
-                "Search, filter, and sort every account. Filters live in the URL, so any segment can be bookmarked or shared.",
+                "Find any account quickly. Filters are saved in the link, so you can bookmark or share a view.",
             },
             {
-              title: "Account dossier",
+              title: "Account page",
               description:
-                "One company's contacts, deals, interaction timeline, and score breakdown on a single page.",
+                "Contacts, deals, activity, and score for one company, all in one place.",
             },
             {
               title: "Lifecycle stages",
               description:
-                "Lead, prospect, customer, churned. Every transition is recorded with its date and author.",
+                "Lead, prospect, customer, churned. Every change is logged with who made it and when.",
             },
           ]}
         />

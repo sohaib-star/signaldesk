@@ -22,7 +22,7 @@ describe("WorkspaceError", () => {
     render(<WorkspaceError error={error} retry={() => {}} />);
 
     expect(screen.getByText("Reference: abc123")).toBeDefined();
-    expect(screen.getByText(/quote the reference below/)).toBeDefined();
+    expect(screen.getByText(/include the reference below/)).toBeDefined();
     expect(screen.queryByText(/secret internal detail/)).toBeNull();
   });
 

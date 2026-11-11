@@ -48,7 +48,7 @@ test("unknown routes render the not-found page", async ({ page }) => {
   const response = await page.goto("/does-not-exist");
   expect(response?.status()).toBe(404);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "No such page",
+    "Page not found",
   );
 });
 

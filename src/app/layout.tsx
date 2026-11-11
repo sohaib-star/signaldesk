@@ -27,8 +27,7 @@ export const metadata: Metadata = {
     template: "%s · SignalDesk",
     default: "SignalDesk",
   },
-  description:
-    "Customer and pipeline intelligence with explainable, auditable recommendations.",
+  description: "A CRM that shows you what needs your attention, and why.",
 };
 
 export const viewport: Viewport = {

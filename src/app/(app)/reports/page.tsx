@@ -15,44 +15,44 @@ export default function ReportsPage() {
       <PageHeader
         eyebrow={`${section.index} / ${section.summary}`}
         title={section.label}
-        dek="A fixed catalogue of named metrics. Each one has a written definition, a formula, and a visible sample size."
+        dek="See how sales are performing, and exactly how each number is calculated."
       />
       <PageBody
         margin={
           <>
-            <MarginNote title="This view answers">
+            <MarginNote title="Questions it answers">
               <QuestionList
                 questions={[
-                  "How quickly do deals move through each stage?",
-                  "Where do deals convert, and where are they lost?",
-                  "Is this period better or worse than the last?",
+                  "How long do deals spend in each stage?",
+                  "Where do we win deals, and where do we lose them?",
+                  "Are we doing better than last period?",
                 ]}
               />
             </MarginNote>
             <MarginNote title="Small samples">
-              Metrics computed from too few records are withheld and marked as
-              insufficient. They are never extrapolated.
+              When there isn&rsquo;t enough data for a reliable number, we say
+              so instead of guessing.
             </MarginNote>
           </>
         }
       >
         <ViewBlueprint
-          statement="There is no history to measure yet. Metrics appear once deals and their stage changes are recorded."
+          statement="Reports need some history to work with. They’ll fill in as you record deals and move them through stages."
           items={[
             {
-              title: "Metric catalogue",
+              title: "Metric library",
               description:
-                "Every metric with its definition, its formula, and the records it counts.",
+                "Every metric, with a plain definition and the formula behind it.",
             },
             {
-              title: "Conversion and velocity",
+              title: "Conversion and speed",
               description:
-                "Stage-to-stage conversion and time in stage, built from recorded stage history rather than inferred.",
+                "How deals move from stage to stage and how long each stage takes, based on what actually happened.",
             },
             {
               title: "Period comparison",
               description:
-                "This period against the previous one, with sample sizes beside every figure.",
+                "This period against the last, with the number of deals behind each figure.",
             },
           ]}
         />

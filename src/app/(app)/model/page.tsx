@@ -16,49 +16,50 @@ export default function ModelPage() {
       <PageHeader
         eyebrow={`${section.index} / ${section.summary}`}
         title={section.label}
-        dek="The complete, inspectable definition of how SignalDesk scores accounts and decides what to recommend. Nothing is hidden behind it."
+        dek="See exactly how accounts are scored and why each recommendation appears."
       />
       <PageBody
         margin={
           <>
-            <MarginNote title="This view answers">
+            <MarginNote title="Questions it answers">
               <QuestionList
                 questions={[
                   "What goes into a score?",
-                  "Why did this recommendation fire?",
-                  "What would change if a factor mattered more?",
+                  "Why was this recommended?",
+                  "What changes if a factor counts for more?",
                 ]}
               />
             </MarginNote>
-            <MarginNote title="Principle">
-              Intelligence here is deterministic first. A language model may
-              write summaries later, but it never produces a score or a ranking.
+            <MarginNote title="How AI is used">
+              Scores and rankings come from clear rules you can inspect. AI may
+              help write summaries later, but it never decides a score or a
+              ranking.
             </MarginNote>
           </>
         }
       >
         <ViewBlueprint
-          statement="No scoring model has been defined yet."
+          statement="No scoring model has been set up yet."
           items={[
             {
-              title: "Scoring laboratory",
+              title: "Scoring lab",
               description:
-                "Adjust signal weights and preview how account rankings would change before anything is saved.",
+                "Adjust how much each factor counts and preview the new rankings before you save.",
             },
             {
-              title: "Signal definitions",
+              title: "Scoring factors",
               description:
-                "Each input to a score: what it measures, how it is normalised, and when it counts as unavailable.",
+                "What each factor measures, how it’s scaled, and what happens when data is missing.",
             },
             {
               title: "Recommendation rules",
               description:
-                "The conditions under which each recommendation fires, and how its priority is calculated.",
+                "When each recommendation appears and how its priority is set.",
             },
             {
               title: "Version history",
               description:
-                "Every score records the model version that produced it, so any past result can be reproduced.",
+                "Every score is tied to the model version that produced it, so past results can always be reproduced.",
             },
           ]}
         />
@@ -69,13 +70,12 @@ export default function ModelPage() {
               id="provenance-heading"
               className="font-display text-2xl font-medium tracking-tight"
             >
-              Provenance
+              Where values come from
             </h2>
           </div>
           <p className="mt-4 mb-6 max-w-[62ch] leading-relaxed text-graphite-700">
-            Every value in SignalDesk carries one of four marks, so it is always
-            clear whether you are reading a record, a calculation, an
-            assumption, or generated text.
+            Every value is marked, so you always know whether you&rsquo;re
+            looking at a record, a calculation, an estimate, or AI-written text.
           </p>
           <ProvenanceLegend />
         </section>

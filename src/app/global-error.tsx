@@ -40,12 +40,12 @@ export default function GlobalError({
       >
         <main role="alert" style={{ maxWidth: "32rem" }}>
           <h1 style={{ fontFamily: "Georgia, serif", fontWeight: 500 }}>
-            SignalDesk could not load
+            SignalDesk couldn&rsquo;t load
           </h1>
           <p style={{ color: "#45423d", lineHeight: 1.6 }}>
-            Nothing was changed. Try again
+            Nothing was changed. Please try again
             {digest
-              ? ", and if the problem continues, quote the reference below."
+              ? ". If it keeps happening, include the reference below when you report it."
               : "."}
           </p>
           {digest ? (

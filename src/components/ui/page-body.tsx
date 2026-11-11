@@ -19,7 +19,7 @@ export function PageBody({
       </div>
       {margin ? (
         <aside
-          aria-label="About this view"
+          aria-label="About this page"
           className="border-t border-graphite-200 px-5 py-8 sm:px-8 lg:border-t-0 lg:border-l lg:px-7 lg:py-10"
         >
           {margin}

@@ -15,46 +15,45 @@ export default function PipelinePage() {
       <PageHeader
         eyebrow={`${section.index} / ${section.summary}`}
         title={section.label}
-        dek="Every open deal by stage, with stalls and slipped dates marked against explicit thresholds."
+        dek="See where your deals stand and which ones are falling behind."
       />
       <PageBody
         margin={
           <>
-            <MarginNote title="This view answers">
+            <MarginNote title="Questions it answers">
               <QuestionList
                 questions={[
-                  "Where is revenue stuck?",
-                  "Which deals have slipped their close date?",
+                  "Where are deals getting stuck?",
+                  "Which deals have missed their close date?",
                   "How is value spread across stages?",
-                  "What happens to the pipeline if a deal moves?",
+                  "What happens if a deal moves forward or slips?",
                 ]}
               />
             </MarginNote>
-            <MarginNote title="Definition">
-              <em>Weighted value</em> is a deal&rsquo;s amount multiplied by its
-              stage probability. It is labelled as an estimate, never presented
-              as a forecast.
+            <MarginNote title="Weighted value">
+              A deal&rsquo;s amount multiplied by its chance of closing at its
+              current stage. It&rsquo;s shown as an estimate, not a forecast.
             </MarginNote>
           </>
         }
       >
         <ViewBlueprint
-          statement="No deals have been recorded, so there is no pipeline to show."
+          statement="Add deals and they’ll show up here, grouped by stage."
           items={[
             {
-              title: "Stage board and table",
+              title: "Board and table views",
               description:
-                "Open deals grouped by stage, switchable to a dense sortable table.",
+                "See open deals by stage, or switch to a sortable table.",
             },
             {
-              title: "Stall and slip markers",
+              title: "Stalled and overdue deals",
               description:
-                "Deals past their stage's stale threshold or past their expected close date, each flagged with the rule that triggered it.",
+                "Deals that have sat in a stage too long or passed their close date are flagged, with the reason shown.",
             },
             {
               title: "Scenario simulator",
               description:
-                "Explore hypothetical changes, such as a deal slipping a quarter or a stage converting better. Computed in memory and never written to real records.",
+                "Try out what-ifs, like a deal slipping a quarter, without touching your real data.",
             },
           ]}
         />

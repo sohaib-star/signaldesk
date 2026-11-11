@@ -15,45 +15,45 @@ export default function TodayPage() {
       <PageHeader
         eyebrow={`${section.index} / ${section.summary}`}
         title={section.label}
-        dek="A short, ranked list of the decisions that need you, each with the records and calculations behind it."
+        dek="Here’s what needs your attention today."
       />
       <PageBody
         margin={
           <>
-            <MarginNote title="This view answers">
+            <MarginNote title="Questions it answers">
               <QuestionList
                 questions={[
-                  "Which opportunities need action today?",
-                  "Which customers are being neglected?",
-                  "What changed since I last looked?",
+                  "Which deals need action today?",
+                  "Which customers haven’t heard from us in a while?",
+                  "What’s changed since I last checked?",
                   "Why is each item ranked where it is?",
                 ]}
               />
             </MarginNote>
-            <MarginNote title="Requires">
-              Accounts, open deals, and activity history. Rankings are computed
-              only from recorded data.
+            <MarginNote title="What it needs">
+              Your accounts, open deals, and activity. Priorities are based only
+              on what you&rsquo;ve recorded.
             </MarginNote>
           </>
         }
       >
         <ViewBlueprint
-          statement="There are no records yet, so there is nothing to rank. This space stays empty until real data exists. Nothing is invented to fill it."
+          statement="Your priorities will appear here once you add accounts and deals. Until then this page stays empty. We never fill it with sample data."
           items={[
             {
-              title: "Ranked action queue",
+              title: "Priority list",
               description:
-                "Recommended actions ordered by a documented priority function. Each can be marked done, snoozed, or dismissed with a reason.",
+                "What to do next, in order. Mark items done, snooze them, or dismiss them with a reason.",
             },
             {
               title: "Evidence explorer",
               description:
-                "For any recommendation, the source records it cites, the signals that fired, and the arithmetic that produced its rank.",
+                "Open any recommendation to see the records and calculations behind it.",
             },
             {
-              title: "Changes since last visit",
+              title: "What’s changed",
               description:
-                "Stage moves, new activity, and score shifts, each attributed to the record that caused it.",
+                "New activity, stage changes, and score movements since your last visit, each linked to its source.",
             },
           ]}
         />

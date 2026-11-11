@@ -23,12 +23,12 @@ export default function WorkspaceError({
         Error
       </p>
       <h1 className="mt-2 font-display text-3xl font-medium tracking-tight">
-        This view failed to load
+        This page didn&rsquo;t load
       </h1>
       <p className="mt-3 max-w-[62ch] leading-relaxed text-graphite-700">
-        Nothing was changed. Try again
+        Nothing was changed. Please try again
         {digest
-          ? "; if the problem continues, quote the reference below."
+          ? ". If it keeps happening, include the reference below when you report it."
           : "."}
       </p>
       {digest ? (
