@@ -28,11 +28,21 @@ been started and requires explicit approval.
   `partialPrefetching` enabled. All current routes prerender as static HTML.
 - **Three-layer separation**, enforced by ESLint `no-restricted-imports`:
   - `src/domain/` (planned, Milestone 3): pure TypeScript intelligence engine.
-    Lint forbids React, Next.js, Supabase, `@/app`, `@/components`,
-    `@/server` imports.
+  - `src/lib/`: framework-free helpers that domain code may use.
+  - `src/domain/` and `src/lib/` share one "pure layer" rule. Lint forbids
+    React, React DOM, Next.js (`next`, `@next/*`), `server-only`,
+    `client-only`, Supabase, and `@/app`, `@/components`, `@/server`. Relative
+    paths into `app`, `components` or `server` are also blocked, and so are JSX
+    and any `.tsx` file in these folders.
   - `src/server/` (planned, Milestone 1): data access, auth, server actions.
-  - `src/app/` + `src/components/`: presentation. `src/components` and
-    `src/lib` may not import from `src/app`.
+  - `src/app/` + `src/components/`: presentation. `src/components` may not
+    import from `src/app`, by alias or relative path.
+  - The rules are proven by 60 tests in `src/architecture.test.ts`. They lint
+    sample code in memory, and each one fails against the earlier, weaker
+    config.
+  - Constraints for future code: domain cannot import types generated
+    under `@/server` (it defines its own input types), and `server-only`
+    modules such as env validation go in `src/server/`, not `src/lib/`.
 - **Client components are minimal** (3): `nav-links.tsx` (reads the pathname),
   `error.tsx`, `global-error.tsx`. Everything else is a Server Component.
 - **Navigation state** is read with `usePathname` inside a `Suspense` boundary
@@ -66,7 +76,8 @@ src/
     brand/wordmark.tsx
     ui/                       page-header, page-body, view-blueprint,
                               provenance, question-list
-  lib/                        cx, error-digest
+  lib/                        cx, error-digest (framework-free)
+  architecture.test.ts        proves the ESLint layer boundaries
 tests/e2e/                    Playwright: shell.spec.ts, quality.spec.ts
 qa/                           (gitignored) QA screenshots and results
 ```
@@ -108,7 +119,7 @@ Verified on Node 24.22.2 (clean clone) and Node 26.3.0 (local).
   specimen, provenance marks.
 - 404 page, workspace error boundary with retry and digest reference,
   global error boundary.
-- Tooling: lint (with architecture boundaries), Prettier, typecheck, Vitest,
+- Tooling: lint (with tested architecture boundaries), Prettier, typecheck, Vitest,
   Playwright + axe at three viewports, CI workflow, live QA sweep script.
 
 ## Remaining work
@@ -156,7 +167,7 @@ npm run start         # http://localhost:3000
 npm run lint          # ESLint
 npm run format:check  # Prettier
 npm run typecheck     # next typegen && tsc --noEmit
-npm test              # Vitest: unit + component (47 tests)
+npm test              # Vitest: unit + component + architecture (107 tests)
 npm run check         # all four of the above
 
 npx playwright install chromium     # first time only

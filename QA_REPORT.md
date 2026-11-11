@@ -12,7 +12,7 @@ are copied from tool output, not estimated.
 | Lint (`npm run lint`)                               | ✅ exit 0, no errors or warnings                           |
 | Prettier (`npm run format:check`)                   | ✅ exit 0, all files formatted                             |
 | TypeScript (`npm run typecheck`)                    | ✅ exit 0                                                  |
-| Unit tests (Vitest, Node)                           | ✅ 37 / 37                                                 |
+| Unit tests (Vitest, Node)                           | ✅ 97 / 97 (37 + 60 architecture boundary tests)           |
 | Component tests (Vitest, jsdom)                     | ✅ 10 / 10                                                 |
 | E2E + accessibility (Playwright)                    | ✅ 66 / 66 (22 tests × 3 viewports), 0 skipped             |
 | E2E flakiness run (`--repeat-each=3`)               | ✅ 189 / 189 (run before the forced-colors test was added) |
@@ -62,7 +62,7 @@ Checks (final run at `121bad2`):
 | Clean clone + Node 24.22.2: `npm ci`, `lint`, `format:check`, `typecheck`, `test`, `build`, `test:e2e`      | all passed; 47 unit, 66 E2E                                                                                                                                     |
 | `npx js-yaml .github/workflows/ci.yml`                                                                      | valid; 11 steps in expected order                                                                                                                               |
 
-## Unit and component tests (47)
+## Unit and component tests (107)
 
 | File                                           | Env   | Tests |
 | ---------------------------------------------- | ----- | ----- |
@@ -70,6 +70,7 @@ Checks (final run at `121bad2`):
 | `src/app/(app)/system/swatches.test.ts`        | node  | 18    |
 | `src/lib/error-digest.test.ts`                 | node  | 7     |
 | `src/lib/cx.test.ts`                           | node  | 2     |
+| `src/architecture.test.ts`                     | node  | 60    |
 | `src/app/(app)/_components/nav-links.test.tsx` | jsdom | 4     |
 | `src/app/(app)/error.test.tsx`                 | jsdom | 3     |
 | `src/components/ui/provenance.test.tsx`        | jsdom | 3     |
@@ -168,7 +169,8 @@ Next.js dev indicator ("N" badge), which is absent in production.
 | 14  | Own test gap: keyboard tests skipped on touch viewports                             | Low      | skip removed; now run on all 3                           | `77040a1`                              |
 
 Also added: an ESLint rule forbidding `src/components` and `src/lib` from
-importing `src/app` (`b763740`).
+importing `src/app` (`b763740`). It was later strengthened; see
+"Architecture boundary hardening" below.
 
 ## Security audit
 
@@ -234,6 +236,69 @@ Results after the rewrite (all run on the final copy):
 
 The screenshots were reviewed manually at 1440 and 320, and line wrapping is
 fine. Firefox and WebKit were not re-swept after this copy-only change.
+
+## Architecture boundary hardening
+
+A review of the ESLint boundary rules found four gaps. The domain rule had no
+files to apply to yet, so I checked it by linting sample code from stdin:
+
+1. Relative imports (`../app/...`, `../server/...`) bypassed the
+   alias-only patterns.
+2. `server-only` was not restricted in `src/domain`.
+3. JSX needs no React import under the automatic runtime, so a component
+   could be written in `src/domain/*.tsx` without tripping the import ban.
+4. `src/domain` may import `src/lib`, but `src/lib` was not itself
+   framework-free.
+
+Changes in `eslint.config.mjs`:
+
+- `src/domain` and `src/lib` now share one "pure layer" rule. It blocks
+  `react`, `react/*`, `react-dom`, `react-dom/*`, `next`, `next/*`,
+  `@next/*`, `server-only`, `client-only`, `@supabase/*`, `@/app/*`,
+  `@/components/*` and `@/server/*`.
+- A `regex` pattern blocks relative imports that pass through an `app`,
+  `components` or `server` folder. The same pattern protects `src/components`
+  against relative imports into `src/app`.
+- `no-restricted-syntax` rejects JSX elements and fragments in the pure layers,
+  and rejects any `.tsx` file there even without JSX.
+
+Tests: `src/architecture.test.ts` has 60 tests. They lint in-memory code
+against virtual paths with ESLint's Node API, so no `src/domain` or
+`src/server` folder is created. For both `src/domain` and `src/lib`:
+
+- 14 forbidden imports and 5 relative bypasses are blocked.
+- A `.tsx` file and JSX are rejected.
+- Legitimate pure imports (`./weights`, `../signals/recency`, `@/lib/cx`,
+  `@/domain/...`, `node:crypto`) and a realistic pure function produce
+  **zero errors of any kind**.
+- For `src/components`, 2 imports into `src/app` are blocked and 4 legitimate
+  imports are allowed.
+
+The tests can fail: run against the previous config, 31 failed, exactly
+the new restrictions. The 29 that passed were the allowed cases plus the
+restrictions the old config already enforced.
+
+Known constraints on future code (by design, documented for Milestone 1):
+
+- Domain code cannot import database-generated types from `@/server/...`,
+  including `import type`. Domain defines its own input types, and the server
+  layer maps rows to them.
+- `server-only` modules, such as environment validation, belong in
+  `src/server/`, not `src/lib/`.
+- A subfolder named `app`, `components` or `server` inside a pure layer
+  cannot be imported by a relative path. This is a false positive of the
+  folder-name match.
+
+Results (working tree with these changes, before commit):
+
+| Check                   | Result                          |
+| ----------------------- | ------------------------------- |
+| `npm run lint`          | ✅ exit 0                       |
+| `npm run format:check`  | ✅ exit 0                       |
+| `npm run typecheck`     | ✅ exit 0                       |
+| `npm test`              | ✅ 8 files, 107 / 107           |
+| `npm run build`         | ✅ exit 0, 9 routes, all static |
+| Playwright (full suite) | ✅ 66 / 66                      |
 
 ## Remaining limitations
 
