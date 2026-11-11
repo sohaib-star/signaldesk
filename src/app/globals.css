@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * SignalDesk design tokens.
+ *
+ * Tailwind's default palette is removed on purpose (`--color-*: initial`):
+ * every colour in the product must come from this file.
+ *
+ * Contrast rules (WCAG 2.2, measured against the surfaces below):
+ *   on paper — ink 15.8:1, graphite-700 8.9:1, graphite-600 6.3:1  → body/secondary text
+ *              graphite-500 4.3:1                                   → large text / non-text only
+ *              signal-strong 5.0:1                                  → orange text
+ *              signal 3.2:1                                         → marks, rules, focus only
+ *   on ink   — paper 15.8:1, graphite-300 8.8:1, graphite-400 5.8:1 → text
+ *
+ * Signal orange means "this needs a decision". Never use it decoratively.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-paper: #f4f1ea;
+  --color-paper-raised: #faf8f3;
+  --color-paper-sunken: #ece8df;
+
+  --color-ink: #16181c;
+  --color-ink-raised: #202328;
+  --color-ink-rule: #33363c;
+
+  --color-graphite-100: #e4dfd5;
+  --color-graphite-200: #d5cfc3;
+  --color-graphite-300: #bdb6a8;
+  --color-graphite-400: #9a9387;
+  --color-graphite-500: #77716a;
+  --color-graphite-600: #5c5852;
+  --color-graphite-700: #45423d;
+  --color-graphite-800: #2e2c29;
+
+  --color-signal: #e8590c;
+  --color-signal-strong: #b2430a;
+  --color-signal-wash: #f7e3d4;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans:
+    var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1rem;
+  --text-eyebrow--letter-spacing: 0.08em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-signal-wash);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SignalDesk
 
-## Getting Started
+Customer and pipeline intelligence with explainable, auditable recommendations.
+Every score and recommendation is computed by a deterministic engine whose
+formulas and inputs can be inspected. Language-model output, when added, is
+always labelled and never produces a score or a ranking.
 
-First, run the development server:
+**Status: Milestone 0 (foundation).** The application shell, design system,
+and tooling exist. No data source, authentication, or business logic is
+connected yet, and no view shows sample data.
+
+## Requirements
+
+- Node.js 24 or later (`.nvmrc` pins 24, the CI and deploy target)
+- npm
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. The root redirects to **Today**. The design
+system reference is at <http://localhost:3000/system>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script                 | Purpose                                                        |
+| ---------------------- | -------------------------------------------------------------- |
+| `npm run dev`          | Development server (Turbopack)                                 |
+| `npm run build`        | Production build                                               |
+| `npm run start`        | Serve the production build                                     |
+| `npm run lint`         | ESLint (Next.js rules plus architecture boundaries)            |
+| `npm run typecheck`    | Generate route types, then `tsc --noEmit`                      |
+| `npm run format`       | Format with Prettier (sorts Tailwind classes)                  |
+| `npm run format:check` | Verify formatting                                              |
+| `npm test`             | Unit and component tests (Vitest)                              |
+| `npm run test:watch`   | Vitest in watch mode                                           |
+| `npm run test:e2e`     | End-to-end and accessibility tests (Playwright, needs a build) |
+| `npm run check`        | Lint, format check, typecheck, and unit tests                  |
 
-## Learn More
+First-time end-to-end setup:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx playwright install chromium
+npm run build && npm run test:e2e
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  app/
+    (app)/               workspace shell layout and sections
+      _components/       navigation and shell
+      today/ pipeline/ accounts/ reports/ model/
+      system/            design-system reference (not in navigation)
+  components/
+    brand/               wordmark
+    ui/                  design-system primitives
+  lib/                   small framework-free utilities
+tests/e2e/               Playwright specs
+```
 
-## Deploy on Vercel
+Planned layers, introduced in later milestones: `src/domain/` (pure
+intelligence engine, lint-enforced to be framework-free) and `src/server/`
+(data access, auth, and server actions).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16 (App Router, Cache Components, Partial Prefetching), React 19,
+TypeScript, Tailwind CSS 4 (via the Turbopack loader), Vitest, and Playwright.
+Supabase (PostgreSQL) and the Claude API come in later milestones.
