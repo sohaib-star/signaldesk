@@ -119,3 +119,34 @@ test("serves the SignalDesk icon instead of the template favicon", async ({
   expect(await icon.text()).toContain("#e8590c");
   expect((await request.get("/favicon.ico")).status()).toBe(404);
 });
+
+test.describe("forced-colors mode (Windows High Contrast)", () => {
+  test.use({ forcedColors: "active" });
+
+  test("the current section keeps a visible marker", async ({ page }) => {
+    await page.goto("/pipeline");
+    const current = page
+      .getByRole("navigation", { name: "Primary" })
+      .locator('[aria-current="page"]');
+    // Forced colors strips backgrounds, so the marker must be a border.
+    const marker = await current.evaluate((el) => {
+      for (const pseudo of ["::before", "::after"]) {
+        const s = getComputedStyle(el, pseudo);
+        if (s.content === "none") continue;
+        const width = Math.max(
+          parseFloat(s.borderLeftWidth),
+          parseFloat(s.borderBottomWidth),
+        );
+        const style =
+          parseFloat(s.borderLeftWidth) > 0
+            ? s.borderLeftStyle
+            : s.borderBottomStyle;
+        return { width, style };
+      }
+      return null;
+    });
+    expect(marker).not.toBeNull();
+    expect(marker!.width).toBeGreaterThanOrEqual(2);
+    expect(marker!.style).toBe("solid");
+  });
+});

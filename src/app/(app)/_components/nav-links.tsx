@@ -14,16 +14,18 @@ const listStyles: Record<Variant, string> = {
   strip: "flex justify-between overflow-x-auto px-1 sm:justify-start sm:px-2",
 };
 
+// Current-section markers are drawn as borders, not backgrounds: forced-colors
+// mode (Windows High Contrast) strips backgrounds but repaints borders.
 const linkStyles: Record<Variant, { base: string; active: string }> = {
   rail: {
     base: "relative flex items-baseline gap-3 px-5 py-2 text-[0.9375rem] text-graphite-300 transition-colors hover:bg-ink-raised hover:text-paper",
     active:
-      "bg-ink-raised text-paper before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:bg-paper",
+      "bg-ink-raised text-paper before:absolute before:inset-y-2 before:left-0 before:border-l-2 before:border-paper",
   },
   strip: {
     base: "relative flex items-baseline gap-1.5 px-2 py-2.5 text-[0.8125rem] whitespace-nowrap text-graphite-300 transition-colors hover:text-paper sm:px-3 sm:text-sm",
     active:
-      "text-paper after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:bg-paper sm:after:inset-x-3",
+      "text-paper after:absolute after:inset-x-2 after:bottom-0 after:border-b-2 after:border-paper sm:after:inset-x-3",
   },
 };
 
