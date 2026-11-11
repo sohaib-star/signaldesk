@@ -1,6 +1,6 @@
 # SignalDesk — Milestone 0 QA Report
 
-_Date: 2026-11-10 · Branch: `milestone-0` · Verified at commit `1acdec5`_
+_Date: 2026-11-10 · Branch: `milestone-0` · Verified at commit `121bad2`_
 
 All results below are from commands actually run during this session. Counts
 are copied from tool output, not estimated.
@@ -39,10 +39,10 @@ Git:
 | ---------------------------------------- | -------------------------------------------------------- |
 | `git status`, `git branch -a`, `git log` | `main` only, one template commit, M0 changes uncommitted |
 | `git switch -c milestone-0`              | branch created (did not previously exist)                |
-| `git add -A && git commit`               | `7060cb8` Milestone 0 (44 files)                         |
+| `git add -A && git commit`               | `2fafc67` Milestone 0 (44 files)                         |
 | 7 further commits                        | stabilisation fixes, listed under "Bugs fixed"           |
 
-Checks (final run at `1acdec5`):
+Checks (final run at `121bad2`):
 
 | Command                                                                                                     | Result                                                                                                                                                          |
 | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -152,23 +152,23 @@ Next.js dev indicator ("N" badge), which is absent in production.
 
 | #   | Bug                                                                                 | Severity | Fix                                                      | Commit                                 |
 | --- | ----------------------------------------------------------------------------------- | -------- | -------------------------------------------------------- | -------------------------------------- |
-| 1   | "Model" clipped off the mobile nav strip at 320px (WCAG 1.4.10 reflow)              | High     | labels distributed evenly below `sm`; regression test    | `9565290`                              |
-| 2   | Desktop rail ended at viewport height on long pages                                 | Medium   | ink background on full-height column, sticky inner panel | `9565290`                              |
-| 3   | `/system` swatch grid showed grey filler cells and an overhanging border            | Medium   | borders on cells                                         | `9565290`                              |
-| 4   | `/system` omitted 3 declared tokens; hex values duplicated without a check          | Low      | swatch module + drift test                               | `9565290`                              |
-| 5   | Dead code: unused `dark` swatch field                                               | Low      | removed                                                  | `9565290`                              |
-| 6   | Template Next.js favicon still served                                               | Medium   | `icon.svg` SignalDesk mark                               | `9565290` (deletion), `8178509` (icon) |
-| 7   | No boundary for root-layout errors                                                  | Medium   | `global-error.tsx`                                       | `8c36be9`                              |
-| 8   | Error copy said "quote the reference below" with no reference shown                 | Low      | conditional copy; regression test                        | `8c36be9`                              |
-| 9   | No security headers; `X-Powered-By` exposed                                         | Medium   | headers + `poweredByHeader: false`; E2E test             | `8178509`                              |
-| 10  | Fixed DOM id in `ViewBlueprint` would collide if reused                             | Low      | `useId`                                                  | `42aa615`                              |
-| 11  | README called the workspace "authenticated"                                         | Low      | corrected                                                | `42aa615`                              |
-| 12  | Newsreader italic preloaded but unused; Instrument Sans italic used but synthesised | Medium   | load the used italic only                                | `7e9d1c8`                              |
-| 13  | Current section indistinguishable in forced-colors mode                             | High     | markers drawn as borders; E2E test                       | `8dc21ce`                              |
-| 14  | Own test gap: keyboard tests skipped on touch viewports                             | Low      | skip removed; now run on all 3                           | `1a24d51`                              |
+| 1   | "Model" clipped off the mobile nav strip at 320px (WCAG 1.4.10 reflow)              | High     | labels distributed evenly below `sm`; regression test    | `fa426a7`                              |
+| 2   | Desktop rail ended at viewport height on long pages                                 | Medium   | ink background on full-height column, sticky inner panel | `fa426a7`                              |
+| 3   | `/system` swatch grid showed grey filler cells and an overhanging border            | Medium   | borders on cells                                         | `fa426a7`                              |
+| 4   | `/system` omitted 3 declared tokens; hex values duplicated without a check          | Low      | swatch module + drift test                               | `fa426a7`                              |
+| 5   | Dead code: unused `dark` swatch field                                               | Low      | removed                                                  | `fa426a7`                              |
+| 6   | Template Next.js favicon still served                                               | Medium   | `icon.svg` SignalDesk mark                               | `fa426a7` (deletion), `323f023` (icon) |
+| 7   | No boundary for root-layout errors                                                  | Medium   | `global-error.tsx`                                       | `d2de651`                              |
+| 8   | Error copy said "quote the reference below" with no reference shown                 | Low      | conditional copy; regression test                        | `d2de651`                              |
+| 9   | No security headers; `X-Powered-By` exposed                                         | Medium   | headers + `poweredByHeader: false`; E2E test             | `323f023`                              |
+| 10  | Fixed DOM id in `ViewBlueprint` would collide if reused                             | Low      | `useId`                                                  | `b763740`                              |
+| 11  | README called the workspace "authenticated"                                         | Low      | corrected                                                | `b763740`                              |
+| 12  | Newsreader italic preloaded but unused; Instrument Sans italic used but synthesised | Medium   | load the used italic only                                | `34e572b`                              |
+| 13  | Current section indistinguishable in forced-colors mode                             | High     | markers drawn as borders; E2E test                       | `a89041e`                              |
+| 14  | Own test gap: keyboard tests skipped on touch viewports                             | Low      | skip removed; now run on all 3                           | `77040a1`                              |
 
 Also added: an ESLint rule forbidding `src/components` and `src/lib` from
-importing `src/app` (`42aa615`).
+importing `src/app` (`b763740`).
 
 ## Security audit
 
@@ -247,8 +247,8 @@ fine. Firefox and WebKit were not re-swept after this copy-only change.
 5. **Partial CSP**: a strict `script-src` needs nonces, which would make
    every route dynamic. Planned for when M1 makes routes dynamic.
 6. **Dev-tool advisory** (`minimatch`) remains, as explained above.
-7. **Commit grouping:** the favicon deletion landed in `9565290` instead of
-   `8178509`, because it was already staged. History was not rewritten.
+7. **Commit grouping:** the favicon deletion landed in `fa426a7` instead of
+   `323f023`, because it was already staged. The commits were not regrouped.
 8. **Local warning:** a stray `~/package-lock.json` outside the repository
    makes Next.js print a root-detection warning. Harmless; not modified.
 
@@ -270,7 +270,14 @@ Each sweep folder has `screenshots/<viewport>/<route>.png` and
 
 ## Final Git state
 
-- Branch `milestone-0`. Last verified code commit **`1acdec5`**. The
+- Branch `milestone-0`. Last verified code commit **`121bad2`**. The
   documentation commit follows it. The final hash is reported in the
   hand-off message.
 - Working tree clean after the documentation commit.
+- Before the first push to GitHub, the author and committer email on all
+  commits was changed from a personal address to the GitHub no-reply
+  address, using `git filter-branch --env-filter`, with the owner's
+  approval. File contents, messages and dates are unchanged. Every hash
+  changed, and the hashes quoted in this report and in `PROJECT_STATUS.md`
+  were updated to match. The copy revision is now `9145561`, previously
+  `7124e38`.

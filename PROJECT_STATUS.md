@@ -18,9 +18,9 @@ been started and requires explicit approval.
 | Item                      | Value                                                           |
 | ------------------------- | --------------------------------------------------------------- |
 | Branch                    | `milestone-0` (not pushed; `main` still at the template commit) |
-| Milestone 0 commit        | `7060cb8`                                                       |
-| Last verified code commit | `1acdec5` (all checks in QA_REPORT.md were run at this commit)  |
-| Documentation commit      | the commit adding this file, directly after `1acdec5`           |
+| Milestone 0 commit        | `2fafc67`                                                       |
+| Last verified code commit | `121bad2` (all checks in QA_REPORT.md were run at this commit)  |
+| Documentation commit      | the commit adding this file, directly after `121bad2`           |
 
 ## Architecture
 
