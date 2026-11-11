@@ -17,7 +17,7 @@ been started and requires explicit approval.
 
 | Item                      | Value                                                           |
 | ------------------------- | --------------------------------------------------------------- |
-| Branch                    | `milestone-0` (not pushed; `main` still at the template commit) |
+| Branch                    | `milestone-0`, pushed; PR #1 open, not merged; `main` unchanged |
 | Milestone 0 commit        | `2fafc67`                                                       |
 | Last verified code commit | `121bad2` (all checks in QA_REPORT.md were run at this commit)  |
 | Documentation commit      | the commit adding this file, directly after `121bad2`           |
@@ -141,8 +141,10 @@ laboratory, evidence explorer, scenario simulator (never writes real data).
    dynamic rendering). Revisit in M1 when routes become dynamic anyway.
 4. **Dev-tool advisory:** `minimatch` (moderate ReDoS) via `typescript-eslint`;
    no upstream fix yet. Lint-time only. See QA_REPORT.md.
-5. **CI has not run on GitHub** (nothing pushed). The pipeline was reproduced
-   locally in a clean clone on Node 24 and passed every stage.
+5. **CI on GitHub (resolved).** CI runs on pull requests and on pushes to
+   `main`. It first ran on PR #1 and passed every stage at `f6ea41a` and
+   `bdd5801` (run 42958601562). Pushes to `milestone-0` alone do not trigger
+   it; only the open PR does.
 6. **No Docker or Supabase CLI on this machine.** Blocks the local-database
    workflow for M1 until one is chosen (see readiness review).
 
